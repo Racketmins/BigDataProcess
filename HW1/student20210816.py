@@ -1,11 +1,25 @@
 #!/user/bin/python3
 from openpyxl import load_workbook
 
-def calTotal(fn):
+def countStudent(fn, cnt):
 	try:
 		wb = load_workbook(filename = fn)
 		ws = wb.active
-		for row in range(2, 76):
+		row = 2
+		while ws.cell(row = row, column = 1).value != None:
+			cnt  += 1
+			row += 1
+		return cnt
+	except FileNotFoundError:
+		print("File not found-first")
+	finally:
+		wb.close()
+
+def calTotal(fn, cnt):
+	try:
+		wb = load_workbook(filename = fn)
+		ws = wb.active
+		for row in range(2, cnt + 2):
 			mid = ws.cell(row = row, column = 3).value * 0.3
 			fin = ws.cell(row = row, column = 4).value * 0.35
 			hw = ws.cell(row = row, column = 5).value * 0.34
@@ -18,26 +32,26 @@ def calTotal(fn):
 	finally:
 		wb.close()
 
-def rank(fn):
+def rank(fn, cnt):
 	try:
 		wb = load_workbook(filename = fn)
 		ws = wb.active
-		score = [ws.cell(row = row, column = 7).value for row in range(2, 76)]
+		score = [ws.cell(row = row, column = 7).value for row in range(2, cnt + 2)]
 		score.sort()
 		score.reverse()
 					
-		A = int(74 * 0.3) - 1
+		A = int(cnt * 0.3) - 1
 		Ap = int((A + 1) * 0.5) -1
-		B = int(74 * 0.7) - 1
+		B = int(cnt * 0.7) - 1
 		Bp = int((B - A) * 0.5) + A
 		F = 0
-		for i in range(2, 76):
+		for i in range(2, cnt + 2):
 			if ws.cell(row = i, column = 7).value < 40:
 				ws.cell(row = i, column = 8, value = 'F')
 				F -= 1
-		Cp = int((73 + F - B) * 0.5) + B
+		Cp = int((cnt - 1 + F - B) * 0.5) + B
 
-		for i in range(2, 76):
+		for i in range(2, cnt + 2):
 			flag = ws.cell(row = i, column = 7).value
 			if ws.cell(row = i, column = 7).value >= 40:
 				if flag >= score[Ap]:
@@ -58,7 +72,8 @@ def rank(fn):
 	finally:
 		wb.close()
 
-
+count = 0
 fileName = "student.xlsx"
-calTotal(fileName)
-rank(fileName)
+count = countStudent(fileName, count)
+calTotal(fileName, count)
+rank(fileName, count)
