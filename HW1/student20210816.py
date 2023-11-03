@@ -57,15 +57,15 @@ def rank(fn, cnt):
 				if flag >= score[Ap]:
 					ws.cell(row = i, column = 8, value = 'A+')
 				elif flag >= score[A]:
-					ws.cell(row = i, column = 8, value = 'A')
+					ws.cell(row = i, column = 8, value = 'A0')
 				elif flag >= score[Bp]:
 					ws.cell(row = i, column = 8, value = 'B+')
 				elif flag >= score[B]:
-					ws.cell(row = i, column = 8, value = 'B')
+					ws.cell(row = i, column = 8, value = 'B0')
 				elif flag >= score[Cp]:
 					ws.cell(row = i, column = 8, value = 'C+')
 				else:
-					ws.cell(row = i, column = 8, value = 'C')
+					ws.cell(row = i, column = 8, value = 'C0')
 		wb.save(filename = fn)
 	except FileNotFoundError:
 		print("Not File")
