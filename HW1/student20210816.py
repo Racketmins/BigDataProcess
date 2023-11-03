@@ -44,12 +44,7 @@ def rank(fn, cnt):
 		Ap = int((A + 1) * 0.5) -1
 		B = int(cnt * 0.7) - 1
 		Bp = int((B - A) * 0.5) + A
-		F = 0
-		for i in range(2, cnt + 2):
-			if ws.cell(row = i, column = 7).value < 40:
-				ws.cell(row = i, column = 8, value = 'F')
-				F -= 1
-		Cp = int((cnt - 1 + F - B) * 0.5) + B
+		Cp = B + int((cnt - B - 1) * 0.5)
 
 		for i in range(2, cnt + 2):
 			flag = ws.cell(row = i, column = 7).value
@@ -57,15 +52,17 @@ def rank(fn, cnt):
 				if flag >= score[Ap]:
 					ws.cell(row = i, column = 8, value = 'A+')
 				elif flag >= score[A]:
-					ws.cell(row = i, column = 8, value = 'A0')
+					ws.cell(row = i, column = 8, value = 'A')
 				elif flag >= score[Bp]:
 					ws.cell(row = i, column = 8, value = 'B+')
 				elif flag >= score[B]:
-					ws.cell(row = i, column = 8, value = 'B0')
+					ws.cell(row = i, column = 8, value = 'B')
 				elif flag >= score[Cp]:
 					ws.cell(row = i, column = 8, value = 'C+')
 				else:
-					ws.cell(row = i, column = 8, value = 'C0')
+					ws.cell(row = i, column = 8, value = 'C')
+			else:
+				ws.cell(row = i, column = 8, value = 'F')
 		wb.save(filename = fn)
 	except FileNotFoundError:
 		print("Not File")
