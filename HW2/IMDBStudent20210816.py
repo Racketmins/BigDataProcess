@@ -3,7 +3,7 @@ def counter(filename, m):
 		f = open(filename)
 		for line in f:
 			info = line.strip().split("::")
-			genre = info[2].split('|')
+			genre = info[2].strip().split('|')
 			for i in genre:
 				if i not in m:
 					m[i] = 1
