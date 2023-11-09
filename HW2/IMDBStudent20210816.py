@@ -27,9 +27,7 @@ def saveList(filename, m):
 		f.close()
 
 movies = dict()
-s = input()
-fn = s.split()
-inputFile  = fn[0]
-outputFile = fn[1]
+inputFile  = input()
+outputFile = input()
 movies = counter(inputFile, movies)
 saveList(outputFile, movies)
