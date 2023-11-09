@@ -1,33 +1,5 @@
 from datetime import datetime
 
-def convertWeek(rfile, weekDay):
-    try:
-        rf = open(rfile)
-        after = []
-        for line in rf:
-            info = line.strip().split(',')
-            date = datetime.strptime(info[1], '%m/%d/%Y')
-            weekday = date.strftime('%a')
-            info[1] = weekDay[weekday]
-            info_str = ",".join(info)
-            after.append(info_str)
-        after.sort()
-    except FileNotFoundError:
-        print("not file")
-    finally:
-        rf.close()
-        return after
-
-def saveFile(wfile, conv):
-    try:
-        wf = open(wfile, "wt")
-        for i in conv:
-            wf.write("%s\n" % i)
-    except FileNotFoundError:
-        print("we fail to save")
-    finally:
-        wf.close()
-
 weekDay = {
     "Monday" : "MON",
     "Tuesday" : "TUE",
@@ -37,8 +9,25 @@ weekDay = {
     "Saturday" : "SAT",
     "Sunday" : "SUN"
 }
-
 rfile = input()
 wfile = input()
-conv = convertWeek(rfile, weekDay)
-saveFile(wfile, conv)
+result = dict()
+
+with open(rfile) as rf:
+    for line in rf:
+        info = line.strip().split(',')
+        date = datetime.strptime(info[1], '%m/%d/%Y')
+        weekday = date.strftime('%a')
+        info[1] = weekDay[weekday]
+        region = info[0] + ',' + info[1]
+        nums = [int(info[2]) , int(info[3])]
+        if region not in result:
+            result[region] = nums
+        else:
+            result[region][0] += nums[0]
+            result[region][1] += nums[1]
+
+with open(wfile, "wt") as wf:
+    keyls = result.keys()
+    for i in keyls:
+        wf.write("%s %d,%d\n" % (i, result[i][0], result[i][1]))
