@@ -1,40 +1,19 @@
-def counter(filename, m):
-	try:
-		f = open(filename)
-		for line in f:
-			line = line.rstrip()
-			info = line.split("::")
-			if info[2].find('|') == -1:
-				if info[2] not in m:
-					m[info[2]] = 1
-				else:
-					m[info[2]] += 1
-			else:
-				genre = info[2].strip().split('|')
-				for i in genre:
-					if i not in m:
-						m[i] = 1
-					else:
-						m[i] += 1
-		return m
-	except FileNotFoundError:
-		print("Not file from counter")
-	finally:
-		f.close()
+rfile = input()
+wfile = input()
+m = dict()
 
-def saveList(filename, m):
-	try:
-		f = open(filename, "wt")
-		keyList = m.keys()
-		for i in keyList:
-			f.write("%s %d\n" % (i, m[i]))
-	except FileNotFoundError:
-		print("Not file from save")
-	finally:
-		f.close()
+with open(rfile) as f:
+    for line in f:
+        info = line.strip.split('::')
+        genre = info[2].split('|')
+        for i in genre:
+            if i not in m:
+                m[i] = 1
+            else:
+                m[i] += 1
+    print(m)
 
-movies = dict()
-inputFile = input()
-outputFile = input()
-movies = counter(inputFile, movies)
-saveList(outputFile, movies)
+with open(wfile, "wt") as wf:
+    keyls = m.keys()
+    for i in keyls:
+        wf.write("%s %d\n" % (i, m[i]))
