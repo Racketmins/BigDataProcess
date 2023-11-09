@@ -20,7 +20,7 @@ def saveList(filename, m):
 		f = open(filename, "wt")
 		keyList = m.keys()
 		for i in keyList:
-			f.write(str(i) + " "  + str(m[i]) + "\n")
+			f.write("%s %d" % (i, m[i]))
 	except FileNotFoundError:
 		print("Not file from save")
 	finally:
