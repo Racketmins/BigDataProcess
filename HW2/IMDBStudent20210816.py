@@ -1,5 +1,7 @@
-rfile = input()
-wfile = input()
+import sys
+
+rfile = sys.argv[1]
+wfile = sys.argv[2]
 m = dict()
 
 with open(rfile) as f:
