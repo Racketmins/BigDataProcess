@@ -1,4 +1,5 @@
 from datetime import datetime
+import sys
 
 weekDay = {
     "Monday" : "MON",
@@ -9,8 +10,8 @@ weekDay = {
     "Saturday" : "SAT",
     "Sunday" : "SUN"
 }
-rfile = input()
-wfile = input()
+rfile = sys.argv[1]
+wfile = sys.argv[2]
 result = dict()
 
 with open(rfile) as rf:
