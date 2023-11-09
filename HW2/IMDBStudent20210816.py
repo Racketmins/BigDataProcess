@@ -3,12 +3,18 @@ def counter(filename, m):
 		f = open(filename)
 		for line in f:
 			info = line.strip().split("::")
-			genre = info[2].strip().split('|')
-			for i in genre:
-				if i not in m:
-					m[i] = 1
+			if info[2].find('|') == -1:
+				if info[2] not in m:
+					m[info[2]] = 1
 				else:
-					m[i] += 1
+					m[info[2]] += 1
+			else:
+				genre = info[2].strip().split('|')
+				for i in genre:
+					if i not in m:
+						m[i] = 1
+					else:
+						m[i] += 1
 		return m
 	except FileNotFoundError:
 		print("Not file from counter")
