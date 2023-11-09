@@ -37,9 +37,8 @@ weekDay = {
     "Saturday" : "SAT",
     "Sunday" : "SUN"
 }
-s = input()
-ls = s.split()
-rfile = ls[0]
-wfile = ls[1]
+
+rfile = input()
+wfile = input()
 conv = convertWeek(rfile, weekDay)
 saveFile(wfile, conv)
