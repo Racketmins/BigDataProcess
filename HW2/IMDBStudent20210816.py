@@ -2,7 +2,8 @@ def counter(filename, m):
 	try:
 		f = open(filename)
 		for line in f:
-			info = line.strip().split("::")
+			line = line.rstrip()
+			info = line.split("::")
 			if info[2].find('|') == -1:
 				if info[2] not in m:
 					m[info[2]] = 1
@@ -26,14 +27,14 @@ def saveList(filename, m):
 		f = open(filename, "wt")
 		keyList = m.keys()
 		for i in keyList:
-			f.write("%s %d" % (i, m[i]))
+			f.write("%s %d\n" % (i, m[i]))
 	except FileNotFoundError:
 		print("Not file from save")
 	finally:
 		f.close()
 
 movies = dict()
-inputFile  = input()
+inputFile = input()
 outputFile = input()
 movies = counter(inputFile, movies)
 saveList(outputFile, movies)
