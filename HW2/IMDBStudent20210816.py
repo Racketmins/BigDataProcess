@@ -11,7 +11,7 @@ with open(rfile) as f:
                 m[i] = 1
             else:
                 m[i] += 1
-    print(m)
+    #print(m)
 
 with open(wfile, "wt") as wf:
     keyls = m.keys()
