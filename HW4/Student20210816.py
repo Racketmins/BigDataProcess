@@ -8,11 +8,13 @@ def load_data(folderName):
 	data = []
 	labels = []
 	for filename in os.listdir(folderName):
-		label = int(filename.split('_')[0])
-		with open(os.path.join(folderName, filename)) as f:
-			content = f.read().replace('\n', '')
-			data.append([int(i) for i in content if i != '\n'])
-		labels.append(label)
+        	if filename.endswith(".txt"):
+          	  	label = int(filename.split("_")[0])
+			filepath = os.path.join(folderName, filename)
+			with open(filepath, 'r') as file:
+                		content = file.read().replace('\n', '')
+             			data.append(list(map(int, content)))
+                		labels.append(label)
 	return np.array(data), np.array(labels)
 
 def calDistance(a, b):
