@@ -9,7 +9,7 @@ def load_data(folderName):
 	for filename in os.listdir(folderName):
 		label = int(filename.split('_')[0])
 		with open(os.path.join(folderName, filename)) as f:
-			content = f.read()
+			content = f.read().replace('\n', '')
 			data.append([int(i) for i in content if i != '\n'])
 		labels.append(label)
 	return np.array(data), np.array(labels)
@@ -39,6 +39,6 @@ for k in range(1, 21):
 	leng = len(test_data)
 	for i in range(leng):
 		answer = classify0(test_data[i], train_data, train_labels, k)
-		if answer == test_labels[i]:
+		if answer != test_labels[i]:
 			rate += 1
 	print(int((rate / leng)*100))
