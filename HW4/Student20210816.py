@@ -2,6 +2,7 @@ import sys
 import os
 import numpy as np
 import operator
+from collections import Counter
 
 def load_data(folderName):
 	data = []
@@ -14,19 +15,14 @@ def load_data(folderName):
 		labels.append(label)
 	return np.array(data), np.array(labels)
 
+def calDistance(a, b):
+	return np.sqrt(np.sum((a - b)**2))
+
 def classify0(inX, group, labels, k):
-	m = group.shape[0]
-	diffMat = np.tile(inX, (m,1))- group
-	sqDiffMat = diffMat**2
-	sqDistance = sqDiffMat.sum(axis = 1)
-	distance = sqDistance ** 0.5
-	sortedDistance = distance.argsort()
-	classCount = {}
-	for i in range(k):
-		voteI = labels[sortedDistance[i]]
-		classCount[voteI] = classCount.get(voteI, 0) + 1
-	sortedClassCount = sorted(classCount.items(), key = operator.itemgetter(1), reverse = True)
-	return sortedClassCount[0][0]
+	distances = [calDistance(inX, i) for i in group]
+	nearest = np.argsort(distances)[:k]
+	nearest_labels = labels[nearest]
+	return Counter(nearest_labels).most_common(1)[0][0]
 
 train_folder = sys.argv[1]
 test_folder = sys.argv[2]
